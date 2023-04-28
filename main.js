@@ -1,72 +1,45 @@
 const display = document.getElementById('display')
-const num1 = document.getElementById('num1')
-const operando = document.getElementById('operando')
+const displayTwo = document.querySelector('.item1')
 const boton = document.querySelector('.grid-container')
 const limpiar = document.getElementById('limpiar')
 const igual = document.getElementById('igual')
 
-window.addEventListener('DOMContentLoaded', ()=>{
-    display.value=''
-})
 
-let guardar;
-boton.addEventListener('click',(e)=>{
-    let num1Parse = parseFloat(num1.value)
-    if(isNaN(num1Parse)){
-        return
+window.addEventListener('keyup',(e) =>{
+    let numero = parseInt([e.key])
+   if(!isNaN(numero) || e.key=="+" || e.key=="-"){
+        [e.vale]=display.textContent+=e.key;
+   }
+    else if(e.key=="=" || e.key=="Enter"){
+        display.innerHTML = eval(display.innerHTML)
     }
-    if(e.target.id=='suma'){
-        operando.textContent="+" 
-        guardar = num1Parse
-        num1.value=''
-    }else if(e.target.id=='rest'){
-        operando.textContent="-"
-        guardar = num1Parse
-        num1.value=''
-    }else if(e.target.id=='multi'){
-        operando.textContent="*"
-        guardar = num1Parse
-        num1.value=''
-    }else if(e.target.id=='divi'){
-        operando.textContent="/"
-        guardar = num1Parse
-        num1.value=''
-    }else{
-        return
+    if(e.key=="c"){
+        display.textContent = ""
     }
 })
 
-igual.addEventListener('click', ()=>{
-    let  num2Parse = parseFloat(num1.value)
-    switch (operando.textContent) {
-        case "+":  
-        isNaN(num2Parse) ? display.value=guardar :  display.value=guardar+num2Parse;
-        guardar = 0;
-        num1.value='';
-        break;
-        case "-":
-        isNaN(num2Parse) ? display.value=guardar :  display.value=guardar-num2Parse;
-        guardar = 0;
-        num1.value='';
-        break;
-        case "*":
-        isNaN(num2Parse) ? display.value=guardar :  display.value=guardar*num2Parse;
-        guardar = 0;
-        num1.value='';  
-        break;
-        case "/":
-        isNaN(num2Parse) ? display.value=guardar :  display.value=guardar/num2Parse;
-        guardar = 0;
-        num1.value='';  
-        break;
-        default:
-        console.log('¡Ups! tenemos un Error');
-        break;
-    } 
+window.addEventListener('keydown',(e)=>{
+    if(e.key=="/"){
+        [e.vale]=display.textContent+=e.key;
+    }
+    if(e.key=="*"){
+        [e.vale]=display.textContent+=e.key;
+    }
+    if(e.key=="Backspace" || e.key=="Escape"){
+        if(display.textContent){
+            let displayTwo = document.querySelector('.item1').textContent
+            display.textContent = displayTwo.substring(0, displayTwo.length -1);
+        }
+    }   
 })
 
-limpiar.addEventListener('click', ()=>{
-    display.value='';
-    num1.value='';
-    operando.textContent='';
-})
+function ingresar(valor) {
+    display.textContent += valor;
+}
+
+function limpiarDisplay() {
+    display.textContent = ""
+}
+function resultadoFinal() {
+        display.innerHTML = eval(display.innerHTML)
+}
